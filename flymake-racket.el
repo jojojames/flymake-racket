@@ -89,7 +89,12 @@
          `(lambda (result)
             (setq flymake-racket-raco-has-expand-p (if result 'yes 'no))
             (with-current-buffer ,buffer
-              (flymake-racket-add-hook)))))
+              (flymake-racket-add-hook)
+              ;; Because we did this asynchronously, we should explicitly
+              ;; start a syntax check.. but only if `flymake-start-on-flymake-mode'
+              ;; is t.
+              (when flymake-start-on-flymake-mode
+                (flymake-start))))))
     (when (flymake-racket--raco-has-expand)
       (add-hook 'flymake-diagnostic-functions
                 'flymake-racket-lint-if-possible nil t))))
