@@ -29,3 +29,11 @@
     which prompted me to write flymake-racket.
   - flycheck-racket only gives the error message and not the possible cause.
     flymake-racket explicitly looks for the possible cause: message.
+
+  See below for comparison:
+
+  Flymake:
+  [[./screenshots/flymake-racket.png]]
+
+  Flycheck:
+  [[./screenshots/flycheck-racket.png]]
