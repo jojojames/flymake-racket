@@ -1,0 +1,18 @@
+#+TITLE: Flymake Racket
+
+* flymake-racket
+  Flymake extension for Racket.
+* Install
+  #+begin_src emacs-lisp :tangle yes
+(use-package flymake-racket
+  :ensure t
+  :commands (flymake-racket-add-hook)
+  :init
+  (add-hook 'scheme-mode-hook #'flymake-racket-add-hook)
+  (add-hook 'racket-mode-hook #'flymake-racket-add-hook))
+  #+end_src
+* Differences to flycheck-racket
+  - More responsive, flycheck-racket seems to stall typing while it runs
+    which prompted me to write flymake-racket.
+  - flycheck-racket only gives the error message and not the possible cause.
+    flymake-racket explicitly looks for the possible cause: message.
