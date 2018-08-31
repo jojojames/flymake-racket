@@ -36,18 +36,6 @@
 (require 'cl-lib)
 (eval-when-compile (require 'subr-x))
 
-;; Compatibility
-(eval-and-compile
-  (with-no-warnings
-    (if (version< emacs-version "26")
-        (progn
-          (defalias 'flymake-racket-if-let* #'if-let)
-          (defalias 'flymake-racket-when-let* #'when-let)
-          (function-put #'flymake-racket-if-let* 'lisp-indent-function 2)
-          (function-put #'flymake-racket-when-let* 'lisp-indent-function 1))
-      (defalias 'flymake-racket-if-let* #'if-let*)
-      (defalias 'flymake-racket-when-let* #'when-let*))))
-
 ;;; Flymake
 
 (defcustom flymake-racket-executable "raco"
