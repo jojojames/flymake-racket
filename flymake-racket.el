@@ -88,7 +88,11 @@
                 'flymake-racket-lint-if-possible nil t))))
 
 (defun flymake-racket-lint-if-possible (report-fn &rest args)
-  "Run `flymake-racket-lint' if possible."
+  "Run `flymake-racket-lint' if possible.
+
+REPORT-FN is called when `flymake-racket-lint' runs.
+
+ARGS is passed straight through to `flymake-racket-lint'."
   (when (or
          (eq major-mode 'racket-mode)
          (and (eq major-mode 'scheme-mode)
