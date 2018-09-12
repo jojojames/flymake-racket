@@ -188,8 +188,6 @@ OUTPUT-BUFFER is the result of running racket on SOURCE-BUFFER."
                      (setq message (concat message "\n" (nth (1+ i) lines)))
                      ;; Skip next line when processing.
                      (setq i (1+ i)))
-                   ;; (message (format "point %d line %d col %d message %s"
-                   ;;                  point line column message))
                    ;; Accumulate the result.
                    (push (flymake-make-diagnostic source-buffer
                                                   point
