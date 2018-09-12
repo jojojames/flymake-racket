@@ -23,6 +23,7 @@
       (flycheck-mode -1)))
 
   (add-hook 'scheme-mode-hook #'+scheme-mode-setup-linting)
+  (add-hook 'racket-mode-hook #'+scheme-mode-setup-linting)
   #+end_src
 * Differences to flycheck-racket
   - More responsive, flycheck-racket seems to stall typing while it runs
