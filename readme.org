@@ -1,7 +1,9 @@
 #+TITLE: Flymake Racket
 
-* flymake-racket
-  Flymake extension for Racket.
+[[https://melpa.org/#/flymake-racket][file:https://melpa.org/packages/flymake-racket-badge.svg]]
+
+Flymake extension for Racket.
+
 * Install
   #+begin_src emacs-lisp :tangle yes
 (use-package flymake-racket
