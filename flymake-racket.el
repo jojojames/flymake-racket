@@ -66,26 +66,33 @@
   "Add `flymake-racket-lint' to `flymake-diagnostic-functions'."
   ;; Checking if raco expand exists is really slow (200ms~), so
   ;; try to do it using the `async' library.
-  (if (and (fboundp 'async-start)
-           (eq flymake-racket-raco-has-expand-p nil))
-      (let ((buffer (current-buffer)))
-        (async-start
-         `(lambda ()
-            (load ,(locate-library "flymake-racket"))
-            (require 'flymake-racket)
-            (flymake-racket--check-shell-raco-expand))
-         `(lambda (result)
-            (setq flymake-racket-raco-has-expand-p (if result 'yes 'no))
-            (with-current-buffer ,buffer
-              (flymake-racket-add-hook)
-              ;; Because we did this asynchronously, we should explicitly
-              ;; start a syntax check.. but only if `flymake-start-on-flymake-mode'
-              ;; is t.
-              (when flymake-start-on-flymake-mode
-                (flymake-start))))))
+  (cond
+   ((not (executable-find flymake-racket-executable))
+    (message (format "%s not found, not using `flymake-racket'."
+                     flymake-racket-executable))
+    :do-nothing)
+   ((and
+     (fboundp 'async-start)
+     (eq flymake-racket-raco-has-expand-p nil))
+    (let ((buffer (current-buffer)))
+      (async-start
+       `(lambda ()
+          (load ,(locate-library "flymake-racket"))
+          (require 'flymake-racket)
+          (flymake-racket--check-shell-raco-expand))
+       `(lambda (result)
+          (setq flymake-racket-raco-has-expand-p (if result 'yes 'no))
+          (with-current-buffer ,buffer
+            (flymake-racket-add-hook)
+            ;; Because we did this asynchronously, we should explicitly
+            ;; start a syntax check.. but only if `flymake-start-on-flymake-mode'
+            ;; is t.
+            (when flymake-start-on-flymake-mode
+              (flymake-start)))))))
+   (:else
     (when (flymake-racket--raco-has-expand)
       (add-hook 'flymake-diagnostic-functions
-                'flymake-racket-lint-if-possible nil t))))
+                'flymake-racket-lint-if-possible nil t)))))
 
 (defun flymake-racket-lint-if-possible (report-fn &rest args)
   "Run `flymake-racket-lint' if possible.
